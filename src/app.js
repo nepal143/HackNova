@@ -48,7 +48,9 @@ app.get("/login", (req, res) => {
 app.get("/interest", (req, res) => {
   res.render("interest");
 });
-
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard");
+});
 // Handle user responses to predefined questions
 app.post("/handle-interest", async (req, res) => {
   // Process user's interests and generate chatbot responses
