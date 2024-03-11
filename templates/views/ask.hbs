@@ -131,7 +131,7 @@ button
     </head>
     <body>
         <header>
-            <h1 class="nice-font" id="h" >Voyager</h1>
+            <h1 class="nice-font" id="h" >Voyager {{data}}</h1>
         </header>
         
         <main class="nice-font">
@@ -192,6 +192,7 @@ D.addEventListener("DOMContentLoaded",()=>{
         User = prompt("Your name is required for the assistant to work properly : ");
         
     }
+   
     
     Question.focus();
     
@@ -215,8 +216,8 @@ D.addEventListener("DOMContentLoaded",()=>{
                 Lastdiv.scrollIntoView();
             }
         };
-    
-    
+
+        
     Askbtn.addEventListener("click",Ask);
     
     Question.addEventListener("keyup",function(event){

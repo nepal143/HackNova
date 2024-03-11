@@ -39,7 +39,7 @@ A smart phone
 - Over childhood!!
 - Increasing Competition!!
 - peer pressure is also an important role 
-- confused sseconodary level student </br>
+- confused seconodary level student </br>
   </br>
 
 

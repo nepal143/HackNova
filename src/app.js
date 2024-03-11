@@ -61,9 +61,7 @@ app.post("/handle-interest", async (req, res) => {
 
 
   // Construct HTML response with chatbot responses
-  const htmlResponse = `
-    <p>Response: ${response1.response.text()}</p>
-  `;
+  const htmlResponse = response1.response.text();
 
   res.json({ response: htmlResponse });
 });
@@ -119,7 +117,19 @@ app.post("/login", async (req, res) => {
 });
 
 app.get('/ask', async (req, res) => {
-  res.render("ask");
+    const { interest1, interest2, interest3 } = req.query;
+
+    const response = await fetch('/handle-interest', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ interest1, interest2, interest3 })
+    });
+
+    const data = await response.json();
+    // Render the "result" template and pass the input data as variables
+    res.render('ask', { data});
 });
 
 app.post('/ask', async (req, res) => {
@@ -134,6 +144,17 @@ app.post('/ask', async (req, res) => {
     res.status(500).json({ error: "Content generation failed" });
   }
 });
+
+app.post('/process-form', (req, res) => {
+  // Retrieve form data from the request body
+  const { interest1, interest2, interest3 } = req.body;
+
+  // Process the form data (you can save it to a database, perform calculations, etc.)
+
+  // Redirect the user to another route with the form data
+  res.redirect(`/ask?interest1=${interest1}&interest2=${interest2}&interest3=${interest3}`);
+});
+
 
 // Database connection
 const uri = "mongodb+srv://nepalsss008:hacknova@cluster0.u2cqpgp.mongodb.net/"; // Replace with your MongoDB Atlas URI
