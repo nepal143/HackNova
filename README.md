@@ -1,2 +1,0 @@
-# HackNova
-project for HackNova
