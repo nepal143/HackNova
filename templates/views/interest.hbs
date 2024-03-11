@@ -141,6 +141,27 @@ button[type="submit"]:hover {
 
             const data = await response.json();
             document.getElementById('responses').innerHTML = data.response;
+             
+        });
+        ocument.getElementById('chatbotForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent form submission
+        const question = document.getElementById('question').value;
+
+        // Make API call to Node.js backend to ask the chatbot
+        const response = await fetch('/ask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ question })
+        });
+
+        const data = await response.json();
+        document.getElementById('chatbotResponse').innerText = data.respons
+
+        const chatbotData = await chatbotResponse.json();
+        // Handle chatbot response as needed
+    
         });
     </script>
 </body>
