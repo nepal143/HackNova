@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interest Assessment</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+     body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button[type="button"],
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="button"]:hover,
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#responses {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+}
+
+.response {
+    margin-bottom: 10px;
+}
+
+.response-item {
+    font-weight: bold;
+}
+
+.response-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.response-list li {
+    margin-bottom: 5px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interest Assessment</h1>
+        <form id="interestForm">
+            <div id="question1" class="question">
+                <label for="interest1">Question 1: What are your interests?</label><br>
+                <input type="text" id="interest1" name="interest1"><br><br>
+                <button type="button" onclick="nextQuestion()">Next</button>
+            </div>
+
+            <div id="question2" class="question" style="display: none;">
+                <label for="interest2">Question 2: What skills do you want to develop?</label><br>
+                <input type="text" id="interest2" name="interest2"><br><br>
+                <button type="button" onclick="nextQuestion()">Next</button>
+            </div>
+
+            <div id="question3" class="question" style="display: none;">
+                <label for="interest3">Question 3: What industry or field are you curious about?</label><br>
+                <input type="text" id="interest3" name="interest3"><br><br>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+        <div id="responses"></div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestion}`).style.display = "none";
+            currentQuestion++;
+            document.getElementById(`question${currentQuestion}`).style.display = "block";
+        }
+
+        document.getElementById('interestForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent form submission
+            const interest1 = document.getElementById('interest1').value;
+            const interest2 = document.getElementById('interest2').value;
+            const interest3 = document.getElementById('interest3').value;
+
+            // Make API call to Node.js backend to handle user responses
+            const response = await fetch('/handle-interest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ interest1, interest2, interest3 })
+            });
+
+            const data = await response.json();
+            document.getElementById('responses').innerHTML = data.response;
+        });
+    </script>
+</body>
+</html>

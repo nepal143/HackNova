@@ -45,6 +45,26 @@ app.get("/register", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login");
 });
+app.get("/interest", (req, res) => {
+  res.render("interest");
+});
+
+// Handle user responses to predefined questions
+app.post("/handle-interest", async (req, res) => {
+  // Process user's interests and generate chatbot responses
+  const { interest1, interest2, interest3 } = req.body;
+  
+  // Example logic to generate chatbot responses based on user's interests
+  const response1 = await model.generateContent(`Tell me about ${interest1},What skills are important for ${interest2}, What are the opportunities in ${interest3} these are the asked question to the user now base on the answers of the user give him career guidance `);
+
+
+  // Construct HTML response with chatbot responses
+  const htmlResponse = `
+    <p>Response: ${response1.response.text()}</p>
+  `;
+
+  res.json({ response: htmlResponse });
+});
 
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
