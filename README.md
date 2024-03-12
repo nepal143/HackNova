@@ -50,6 +50,9 @@ A smart phone
 
 ## TEAM
 Team Member 1: **Akhilesh Patidar**
+<br/>
 Team Member 2: **Ankit Rai** 
+<br>
 Team Member 3: **Nepal Singh**
+<br>
 Team Member 4: **Kunal Singh** 
