@@ -91,41 +91,67 @@ input[type="submit"]:hover {
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Interest Assessment</h1>
-        <form id="interestForm" action="/process-form" method="POST">
-            <div id="question1" class="question">
-                <label for="interest1">Question 1: What are your interests?</label><br>
-                <input type="text" id="interest1" name="interest1"><br><br>
-                <button type="button" onclick="nextQuestion()">Next</button>
-            </div>
+    <header>
+        <h1 class="nice-font" id="h" >Voyager {{data}}</h1>
+    </header>
+    
+    <main class="nice-font" id="mainContainer">
+        <!-- Interest Assessment Section -->
+        <div id="interestContainer">
+            <h1>Interest Assessment</h1>
+            <form id="interestForm" action="/handle-interest" method="POST" onsubmit="parseInterests(event)">
+                <div id="question1" class="question">
+                    <label for="interest1">Question 1: What are your interests?</label><br>
+                    <input type="text" id="interest1" name="interest1"><br><br>
+                    <button type="button" onclick="nextQuestion()">Next</button>
+                </div>
 
-            <div id="question2" class="question" style="display: none;">
-                <label for="interest2">Question 2: What skills do you want to develop?</label><br>
-                <input type="text" id="interest2" name="interest2"><br><br>
-                <button type="button" onclick="nextQuestion()">Next</button>
-            </div>
+                <div id="question2" class="question" style="display: none;">
+                    <label for="interest2">Question 2: What skills do you want to develop?</label><br>
+                    <input type="text" id="interest2" name="interest2"><br><br>
+                    <button type="button" onclick="nextQuestion()">Next</button>
+                </div>
 
-            <div id="question3" class="question" style="display: none;">
-                <label for="interest3">Question 3: What industry or field are you curious about?</label><br>
-                <input type="text" id="interest3" name="interest3"><br><br>
-                <input type="submit" value="submit">
-            </div>
-        </form>
-        <div id="responses"></div>
-    </div>
+                <div id="question3" class="question" style="display: none;">
+                    <label for="interest3">Question 3: What industry or field are you curious about?</label><br>
+                    <input type="text" id="interest3" name="interest3"><br><br>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+            <div id="responses"></div>
+        </div>
+    </main>
+{{!-- 
+    <footer>
+        <div id="command">
+            <input placeholder="Ask your query here " type="text" />
+            <button class="shadow nice-font">∆</button>
+        </div>
+    </footer> --}}
 
     <script>
-        let currentQuestion = 1;
+      let currentQuestion = 1;
 
         function nextQuestion() {
             document.getElementById(`question${currentQuestion}`).style.display = "none";
             currentQuestion++;
-            document.getElementById(`question${currentQuestion}`).style.display = "block";
+            const nextQuestionElement = document.getElementById(`question${currentQuestion}`);
+            if (nextQuestionElement) {
+                nextQuestionElement.style.display = "block";
+            } else {
+                document.getElementById("interestContainer").style.display = "none";
+            }
         }
 
-        
-        
+        function parseInterests(event) {
+            event.preventDefault(); // Prevent form submission
+            const formData = new FormData(event.target);
+            const interest1 = formData.get('interest1');
+            const interest2 = formData.get('interest2');
+            const interest3 = formData.get('interest3');
+            // Redirect to the same page with URL parameters
+            window.location.href = `/ask?interest1=${interest1}&interest2=${interest2}&interest3=${interest3}`;
+        }
     </script>
 </body>
 </html>

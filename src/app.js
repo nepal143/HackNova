@@ -5,7 +5,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const User = require("./models/User");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-
+let  interest1 ; 
+let interest2 ; 
+let interest3 ;
 const app = express();
 const session = require("express-session");
 
@@ -29,6 +31,14 @@ app.use(
       saveUninitialized: true,
     })
 );
+const InterestSchema = new mongoose.Schema({
+  interest1: String,
+  interest2: String,
+  interest3: String
+});
+
+// Define a model
+const Interest = mongoose.model('Interest', InterestSchema);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,24 +62,18 @@ app.get("/dashboard", (req, res) => {
   res.render("dashboard");
 });
 // Handle user responses to predefined questions
-app.post("/handle-interest", async (req, res) => {
-  // Process user's interests and generate chatbot responses
+app.post('/handle-interest', async (req, res) => {
   const { interest1, interest2, interest3 } = req.body;
-  
-  // Example logic to generate chatbot responses based on user's interests
-  const response1 = await model.generateContent(`Tell me about ${interest1},What skills are important for ${interest2}, What are the opportunities in ${interest3} these are the asked question to the user now base on the answers of the user give him career guidance `);
 
-
-  // Construct HTML response with chatbot responses
-  const htmlResponse = response1.response.text();
-
-  res.json({ response: htmlResponse });
-});
-
-app.get("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    res.redirect("/");
-  });
+  try {
+    // Create a new document and save it to MongoDB
+    const interest = new Interest({ interest1, interest2, interest3 });
+    await interest.save();
+    res.status(200).send('Data saved successfully');
+  } catch (error) {
+    console.error('Error saving data:', error);
+    res.status(500).send('Error saving data');
+  }
 });
 
 app.post("/register", async (req, res) => {
@@ -109,7 +113,7 @@ app.post("/login", async (req, res) => {
 
     req.session.user = user.username;
     console.log("login successfully");
-    res.redirect("/");
+    res.redirect("/interest");
   } catch (error) {
     console.error(error);
     res.render("login", { error: "Login failed" });
@@ -117,19 +121,21 @@ app.post("/login", async (req, res) => {
 });
 
 app.get('/ask', async (req, res) => {
-    const { interest1, interest2, interest3 } = req.query;
+  // Retrieve interests from the query parameters
+  const { interest1, interest2, interest3 } = req.query;
 
-    const response = await fetch('/handle-interest', {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ interest1, interest2, interest3 })
-    });
+  if (!interest1 || !interest2 || !interest3) {
+      return res.status(400).send('Interests not found in query parameters');
+  }
 
-    const data = await response.json();
-    // Render the "result" template and pass the input data as variables
-    res.render('ask', { data});
+  // Generate career guidance based on the stored interests
+  const response = await model.generateContent(`Tell me about ${interest1}, What skills are important for ${interest2}, What are the opportunities in ${interest3} `);
+
+
+  const guidance = response.response.text();
+
+  // Render the "ask" template and pass the guidance as a variable
+  res.render('ask', { guidance });
 });
 
 app.post('/ask', async (req, res) => {
@@ -149,15 +155,12 @@ app.post('/process-form', (req, res) => {
   // Retrieve form data from the request body
   const { interest1, interest2, interest3 } = req.body;
 
-  // Process the form data (you can save it to a database, perform calculations, etc.)
-
-  // Redirect the user to another route with the form data
+  // Redirect the user to the /ask route with the interests in the query parameters
   res.redirect(`/ask?interest1=${interest1}&interest2=${interest2}&interest3=${interest3}`);
 });
-
-
 // Database connection
-const uri = "mongodb+srv://nepalsss008:hacknova@cluster0.u2cqpgp.mongodb.net/"; // Replace with your MongoDB Atlas URI
+const uri = "mongodb+srv://nepalsss008:hacknova@cluster0.u2cqpgp.mongodb.net/";
+// Replace with your MongoDB Atlas URI
 
 async function connect() {
   try {
@@ -170,7 +173,7 @@ async function connect() {
 
 connect();
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000; 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
