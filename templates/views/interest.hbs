@@ -10,7 +10,11 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background: #abd0ff;
+    background-image: url("interest.png");
+    background-size: 700px;
+    background-position-x: center;
+    background-repeat: no-repeat;
 }
 
 .container {
@@ -21,7 +25,9 @@
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+.caht{
+    margin: 20px;
+}
 h1 {
     text-align: center;
     color: #333;
@@ -29,6 +35,9 @@ h1 {
 
 .question {
     margin-bottom: 20px;
+    width: 60vw;
+    margin: auto ;
+    text-align: center;
 }
 
 label {
@@ -51,7 +60,7 @@ input[type="submit"] {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #23dcbb;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -62,6 +71,9 @@ input[type="submit"] {
 button[type="button"]:hover,
 input[type="submit"]:hover {
     background-color: #0056b3;
+}
+.question label{
+    font-size: 2em;
 }
 
 #responses {
@@ -101,24 +113,24 @@ input[type="submit"]:hover {
             <h1>Interest Assessment</h1>
             <form id="interestForm" action="/handle-interest" method="POST" onsubmit="parseInterests(event)">
                 <div id="question1" class="question">
-                    <label for="interest1">Question 1: What are your interests?</label><br>
+                    <label for="interest1">Question 1: What hobbies or activities do you enjoy in your free time?</label><br>
                     <input type="text" id="interest1" name="interest1"><br><br>
                     <button type="button" onclick="nextQuestion()">Next</button>
                 </div>
 
                 <div id="question2" class="question" style="display: none;">
-                    <label for="interest2">Question 2: What skills do you want to develop?</label><br>
+                    <label for="interest2">Question 2: Are there any specific subjects or topics that you're passionate about?</label><br>
                     <input type="text" id="interest2" name="interest2"><br><br>
                     <button type="button" onclick="nextQuestion()">Next</button>
                 </div>
 
                 <div id="question3" class="question" style="display: none;">
-                    <label for="interest3">Question 3: What industry or field are you curious about?</label><br>
+                    <label for="interest3">Question 3: Have you ever pursued any creative endeavors, like writing, painting, or music?</label><br>
                     <input type="text" id="interest3" name="interest3"><br><br>
                     <input type="submit" value="Submit">
                 </div>
             </form>
-            <div id="responses"></div>
+            {{!-- <div id="responses"></div> --}}
         </div>
     </main>
 {{!-- 

@@ -10,6 +10,7 @@ let interest2 ;
 let interest3 ;
 const app = express();
 const session = require("express-session");
+const bcrypt = require('bcrypt');
 
 // Set up GoogleGenerativeAI
 const api_key = "AIzaSyCSx1UbyW73TVEc_-XR9JGuKchXT69idBE"; // Replace with your API key
