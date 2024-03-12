@@ -11,6 +11,7 @@
     "mongoose": "^8.0.1"
   },
   "scripts": {
-    "dev": "nodemon src/app.js -e js,hbs"
+    "dev": "nodemon src/app.js -e js,hbs", 
+    "start": "node src/app.js"
   }
 }
