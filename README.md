@@ -11,7 +11,7 @@ project for HackNova by Team **Cathersis**
 ## Solution
 
 Meet our product Counseler. A AI based counseling for detailed career path.
-<img  src="../HackNova/public/Screenshot_20240312_075325.png"/>
+<img  src="./public/Screenshot_20240312_075325.png"/>
 <!-- ![Banner](https://github.com/Dbuz/blob/master/public/Screenshot_20240312_075325.png) -->
 
 -
@@ -21,8 +21,8 @@ Meet our product Counseler. A AI based counseling for detailed career path.
 Career path guidance by using AI</br>
 
 </br>
-<img  src="./public/Screenshot_20240312_075325.png"/>
 
+<img  src="./public/Screenshot_20240312_075905.png"/>
 <!-- ![gif](https://github.com/itexpert2572000/Dbuz/blob/master/Images/Bus%20GIF-downsized_large.gif) -->
 
 ## Requirements
