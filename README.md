@@ -12,7 +12,7 @@ project for HackNova by Team **Cathersis**
 
 Meet our product Counseler. A AI based counseling for detailed career path.
 <img  src="../HackNova/public/Screenshot_20240312_075325.png"/>
-<!-- ![Banner](https://github.com/itexpert2572000/Dbuz/blob/master/Images/Git%20banner.jpg) -->
+<!-- ![Banner](https://github.com/Dbuz/blob/master/public/Screenshot_20240312_075325.png) -->
 
 -
 
@@ -21,7 +21,7 @@ Meet our product Counseler. A AI based counseling for detailed career path.
 Career path guidance by using AI</br>
 
 </br>
-<img  src="../HackNova/public/Screenshot_20240312_075905.png"/>
+<img  src="./public/Screenshot_20240312_075325.png"/>
 
 <!-- ![gif](https://github.com/itexpert2572000/Dbuz/blob/master/Images/Bus%20GIF-downsized_large.gif) -->
 
@@ -32,8 +32,11 @@ A smart phone
 ## Technology Stack
 
 - [MongoDB]: MongoDB is a NoSQL database program, using a document-oriented data model to store data in flexible, JSON-like documents, making it easy to integrate data in modern applications.
+
 - [Node.js]: Node.js is an open-source, cross-platform JavaScript runtime environment that executes JavaScript code outside a web browser, allowing developers to build scalable, high-performance applications.
+
 - [HTML], [CSS], and [JavaScript]: HTML (HyperText Markup Language), CSS (Cascading Style Sheets), and JavaScript are the core technologies used for building websites and web applications. HTML provides the structure, CSS handles the presentation, and JavaScript adds interactivity and functionality.
+
 - [API] Integration: API Integration facilitates communication between different software systems, allowing them to exchange data and functionalities seamlessly.
 
 ## What Inspired Us?
