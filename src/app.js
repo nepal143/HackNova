@@ -120,23 +120,39 @@ app.post("/login", async (req, res) => {
     res.render("login", { error: "Login failed" });
   }
 });
-
 app.get('/ask', async (req, res) => {
   // Retrieve interests from the query parameters
   const { interest1, interest2, interest3 } = req.query;
 
   if (!interest1 || !interest2 || !interest3) {
-      return res.status(400).send('Interests not found in query parameters');
+    return res.status(400).send('Interests not found in query parameters');
   }
 
-  // Generate career guidance based on the stored interests
-  const response = await model.generateContent(`Tell me about ${interest1}, What skills are important for ${interest2}, What are the opportunities in ${interest3} `);
+  try {
+    // Retrieve previous chat history from the database
+    const previousChat = await Interest.find().sort({ _id: -1 }).limit(5); // Assuming you want to retrieve the last 5 chats
 
+    // Generate prompt including previous questions and answers
+    let prompt = `Previous chat history:\n`;
+    previousChat.forEach((chat, index) => {
+      prompt += `${index + 1}. Question: ${chat.interest1}\n`;
+      prompt += `   Answer: ${chat.interest2}\n`;
+    });
 
-  const guidance = response.response.text();
+    // Add the new question to the prompt
+    prompt += `\nNew question:\nTell me about ${interest1}, What skills are important for ${interest2}, What are the opportunities in ${interest3}`;
 
-  // Render the "ask" template and pass the guidance as a variable
-  res.render('ask', { guidance });
+    // Generate career guidance based on the stored interests
+    const response = await model.generateContent(prompt);
+
+    const guidance = response.response.text();
+
+    // Render the "ask" template and pass the guidance and previous chat history as variables
+    res.render('ask', { guidance, previousChat });
+  } catch (error) {
+    console.error('Error fetching previous chat history:', error);
+    res.status(500).send('Error fetching previous chat history');
+  }
 });
 
 app.post('/ask', async (req, res) => {
